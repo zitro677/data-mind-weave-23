@@ -78,7 +78,7 @@ const CodeHistoryApp = () => {
         </div>
         <div className="flex items-center space-x-1">
           <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-          <span className="text-white font-bold">codehistory.day</span>
+          <span className="text-white font-bold">datahistory.day</span>
         </div>
         <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
           <span className="text-white text-sm">⋯</span>
