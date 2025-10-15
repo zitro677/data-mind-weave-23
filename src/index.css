@@ -9,40 +9,40 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Brutalist Cyber-UI Design System */
-    --background: 194 76% 75%; /* #90e0ef in HSL */
-    --foreground: 220 20% 15%; /* Dark text for contrast */
+    --background: 211 50% 23%; /* #1d3557 in HSL */
+    --foreground: 0 0% 98%; /* Light text for contrast */
     
-    --card: 194 76% 85%;
-    --card-foreground: 220 20% 15%;
+    --card: 211 50% 28%;
+    --card-foreground: 0 0% 98%;
     
-    --popover: 194 76% 85%;
-    --popover-foreground: 220 20% 15%;
+    --popover: 211 50% 28%;
+    --popover-foreground: 0 0% 98%;
     
-    --primary: 220 20% 15%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 211 50% 23%;
     
-    --secondary: 194 60% 65%;
-    --secondary-foreground: 220 20% 15%;
+    --secondary: 211 40% 35%;
+    --secondary-foreground: 0 0% 98%;
     
-    --muted: 194 50% 60%;
-    --muted-foreground: 220 15% 30%;
+    --muted: 211 30% 30%;
+    --muted-foreground: 0 0% 70%;
     
-    --accent: 189 100% 35%; /* Darker cyan for better contrast */
-    --accent-foreground: 0 0% 98%;
+    --accent: 189 100% 50%;
+    --accent-foreground: 211 50% 23%;
     
     --destructive: 340 82% 52%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 194 60% 50%;
-    --input: 194 60% 50%;
-    --ring: 189 100% 35%;
+    --border: 211 40% 35%;
+    --input: 211 40% 35%;
+    --ring: 189 100% 50%;
     
     --radius: 0.25rem;
     
     /* Additional design tokens */
-    --grid-pattern: 194 76% 70%;
-    --glow: 189 100% 35%;
-    --magenta: 320 100% 40%;
+    --grid-pattern: 211 50% 26%;
+    --glow: 189 100% 50%;
+    --magenta: 320 100% 50%;
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
