@@ -1,5 +1,6 @@
 import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
@@ -19,34 +20,46 @@ const Index = () => {
       <LanguageToggle />
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6">
-        <div className="max-w-7xl w-full mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
-              {t('hero.title')}
-            </h1>
-            
-            <div className="space-y-2">
-              <p className="text-xl text-muted-foreground">
-                {t('hero.subtitle')}
-              </p>
-              
-              <TypingText 
-                text={t('hero.typing')}
-                className="text-lg text-accent"
-              />
+        <div className="max-w-7xl w-full mx-auto">
+          <div className="flex justify-center mb-12">
+            <div className="relative">
+              <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full"></div>
+              <Avatar className="w-48 h-48 border-4 border-accent shadow-2xl relative">
+                <AvatarImage src="/placeholder.svg" alt="Profile" />
+                <AvatarFallback className="text-4xl bg-card text-foreground">JD</AvatarFallback>
+              </Avatar>
             </div>
-            
-            <Button
-              onClick={scrollToExpertise}
-              variant="outline"
-              className="mt-8 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-            >
-              {t('hero.cta')}
-            </Button>
           </div>
           
-          <div className="flex justify-center items-center">
-            <WireframeCube />
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
+                {t('hero.title')}
+              </h1>
+              
+              <div className="space-y-2">
+                <p className="text-xl text-muted-foreground">
+                  {t('hero.subtitle')}
+                </p>
+                
+                <TypingText 
+                  text={t('hero.typing')}
+                  className="text-lg text-accent"
+                />
+              </div>
+              
+              <Button
+                onClick={scrollToExpertise}
+                variant="outline"
+                className="mt-8 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+              >
+                {t('hero.cta')}
+              </Button>
+            </div>
+            
+            <div className="flex justify-center items-center">
+              <WireframeCube />
+            </div>
           </div>
         </div>
       </section>
