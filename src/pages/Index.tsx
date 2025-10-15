@@ -20,7 +20,7 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground">
       <LanguageToggle />
       {/* Hero Section */}
-      <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6">
+      <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
         <div className="max-w-7xl w-full mx-auto">
           <div className="flex justify-center mb-12">
             <div className="relative">
