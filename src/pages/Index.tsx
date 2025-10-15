@@ -1,32 +1,37 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Cpu, Network, Camera, Plane } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
 import DataHistoryApp from '@/components/DataHistoryApp';
+import LanguageToggle from '@/components/LanguageToggle';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Index = () => {
+  const { t } = useLanguage();
+  
   const scrollToExpertise = () => {
     document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <LanguageToggle />
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6">
         <div className="max-w-7xl w-full mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
-              Your Name
+              {t('hero.title')}
             </h1>
             
             <div className="space-y-2">
               <p className="text-xl text-muted-foreground">
-                Information Scientist | AI Systems Architect
+                {t('hero.subtitle')}
               </p>
               
               <TypingText 
-                text="Bridging Data Repositories <> Intelligent Applications."
+                text={t('hero.typing')}
                 className="text-lg text-accent"
               />
             </div>
@@ -36,7 +41,7 @@ const Index = () => {
               variant="outline"
               className="mt-8 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
             >
-              Explore My Work
+              {t('hero.cta')}
             </Button>
           </div>
           
@@ -50,32 +55,32 @@ const Index = () => {
       <section id="expertise" className="py-24 px-6 bg-card/30">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-16 text-center">
-            Core Domains
+            {t('expertise.title')}
           </h2>
           
           <div className="grid md:grid-cols-2 gap-6">
             <ExpertiseCard
               icon={<GitBranch size={48} strokeWidth={1.5} />}
-              title="Open Science & Repositories"
-              description="Structuring knowledge for global access and collaboration."
+              title={t('expertise.openscience.title')}
+              description={t('expertise.openscience.desc')}
             />
             
             <ExpertiseCard
               icon={<Database size={48} strokeWidth={1.5} />}
-              title="Data Science & Automation"
-              description="Transforming raw data into efficient, automated workflows."
+              title={t('expertise.datascience.title')}
+              description={t('expertise.datascience.desc')}
             />
             
             <ExpertiseCard
               icon={<MessageSquare size={48} strokeWidth={1.5} />}
-              title="AI Application Development"
-              description="Building conversational interfaces and intelligent agents."
+              title={t('expertise.ai.title')}
+              description={t('expertise.ai.desc')}
             />
             
             <ExpertiseCard
               icon={<BookOpen size={48} strokeWidth={1.5} />}
-              title="Academic Research"
-              description="Authoring scientific papers grounded in information theory."
+              title={t('expertise.research.title')}
+              description={t('expertise.research.desc')}
             />
           </div>
         </div>
@@ -87,7 +92,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 border border-border p-12 cyber-border">
             {/* Professional Stack */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold mb-6 text-accent">Build With:</h3>
+              <h3 className="text-2xl font-bold mb-6 text-accent">{t('stack.build')}</h3>
               <div className="flex flex-wrap gap-4 items-center">
                 {['Python', 'Flowise', 'N8N', 'Loveable'].map((tech, idx) => (
                   <span 
@@ -106,16 +111,16 @@ const Index = () => {
             
             {/* Creative Pursuits */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold mb-6 text-magenta">Explore With:</h3>
+              <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.explore')}</h3>
               <div className="flex gap-8 items-center">
                 <div className="flex items-center gap-3">
                   <Plane size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">Drone Pilot</span>
+                  <span className="text-lg">{t('stack.drone')}</span>
                 </div>
                 <span className="text-magenta text-2xl">|</span>
                 <div className="flex items-center gap-3">
                   <Camera size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">Photographer</span>
+                  <span className="text-lg">{t('stack.photo')}</span>
                 </div>
               </div>
               <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent" />
@@ -129,10 +134,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto text-center space-y-8">
           <div className="space-y-4">
             <h3 className="text-3xl font-bold">
-              Research | Pontificia Universidad Javeriana
+              {t('academic.title')}
             </h3>
             <p className="text-xl text-muted-foreground">
-              Author of Scientific Papers | <a href="#" className="text-accent hover:underline">ORCID</a>
+              {t('academic.subtitle')} <a href="#" className="text-accent hover:underline">{t('academic.orcid')}</a>
             </p>
           </div>
           
@@ -142,7 +147,7 @@ const Index = () => {
               className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
             >
               <Network size={24} />
-              <span className="font-mono">ORCID Profile</span>
+              <span className="font-mono">{t('academic.profile')}</span>
             </a>
             <span className="text-border">|</span>
             <a 
@@ -150,7 +155,7 @@ const Index = () => {
               className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
             >
               <BookOpen size={24} />
-              <span className="font-mono">Publications</span>
+              <span className="font-mono">{t('academic.publications')}</span>
             </a>
           </div>
         </div>
@@ -167,17 +172,17 @@ const Index = () => {
       <footer className="py-16 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto text-center space-y-6">
           <p className="text-2xl font-bold text-accent">
-            Designed for Connection.
+            {t('footer.tagline')}
           </p>
           
           <div className="flex justify-center gap-8 text-muted-foreground">
-            <a href="#" className="hover:text-accent transition-colors font-mono">LinkedIn</a>
-            <a href="#" className="hover:text-accent transition-colors font-mono">ORCID</a>
-            <a href="#" className="hover:text-accent transition-colors font-mono">Email</a>
+            <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.linkedin')}</a>
+            <a href="#" className="hover:text-accent transition-colors font-mono">{t('academic.orcid')}</a>
+            <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.email')}</a>
           </div>
           
           <p className="text-sm text-muted-foreground font-mono pt-8">
-            © {new Date().getFullYear()} Your Name. Systems in Motion.
+            © {new Date().getFullYear()} {t('hero.title')}. {t('footer.copyright')}
           </p>
         </div>
       </footer>
