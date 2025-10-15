@@ -95,7 +95,7 @@ const DataHistoryApp = () => {
 
       {/* Terminal Command */}
       <div className="mb-6">
-        <span className="text-blue-400">user@datahost:~$ </span>
+        <span className="text-blue-400">@zitro677:~$ </span>
         <span className="text-white">./data-history --landmarks --tech --libraries</span>
       </div>
 
@@ -176,7 +176,7 @@ const DataHistoryApp = () => {
 
       {/* Terminal Prompt */}
       <div className="mb-4">
-        <span className="text-blue-400">user@datahost:~$ </span>
+        <span className="text-blue-400">@zitro677:~$ </span>
         <span className="animate-pulse">█</span>
       </div>
 
