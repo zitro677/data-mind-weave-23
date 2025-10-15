@@ -7,6 +7,7 @@ import ExpertiseCard from '@/components/ExpertiseCard';
 import DataHistoryApp from '@/components/DataHistoryApp';
 import LanguageToggle from '@/components/LanguageToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
+import profilePhoto from '@/assets/profile.jpg';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -25,7 +26,7 @@ const Index = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full"></div>
               <Avatar className="w-48 h-48 border-4 border-accent shadow-2xl relative">
-                <AvatarImage src="/placeholder.svg" alt="Profile" />
+                <AvatarImage src={profilePhoto} alt="Profile" />
                 <AvatarFallback className="text-4xl bg-card text-foreground">JD</AvatarFallback>
               </Avatar>
             </div>
