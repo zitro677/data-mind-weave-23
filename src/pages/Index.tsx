@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
-import CodeHistoryApp from '@/components/CodeHistoryApp';
+import DataHistoryApp from '@/components/DataHistoryApp';
 
 const Index = () => {
   const scrollToExpertise = () => {
@@ -156,10 +156,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Code History Section */}
+      {/* Data History Section */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <CodeHistoryApp />
+          <DataHistoryApp />
         </div>
       </section>
 
