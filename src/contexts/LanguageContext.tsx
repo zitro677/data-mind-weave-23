@@ -11,7 +11,7 @@ interface LanguageContextType {
 const translations = {
   en: {
     // Hero Section
-    'hero.title': 'Your Name',
+    'hero.title': 'Luis Ortiz',
     'hero.subtitle': 'Information Scientist | AI Systems Architect',
     'hero.typing': 'Bridging Data Repositories <> Intelligent Applications.',
     'hero.cta': 'Explore My Work',
@@ -48,7 +48,7 @@ const translations = {
   },
   es: {
     // Hero Section
-    'hero.title': 'Tu Nombre',
+    'hero.title': 'Luis Ortiz',
     'hero.subtitle': 'Científico de la Información | Arquitecto de Sistemas de IA',
     'hero.typing': 'Conectando Repositorios de Datos <> Aplicaciones Inteligentes.',
     'hero.cta': 'Explora Mi Trabajo',
