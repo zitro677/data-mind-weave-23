@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Code2, Share, Terminal, Database, Cpu, Users, BookOpen, Languages } from 'lucide-react';
+import { Calendar, Code2, Share, Terminal, Database, Cpu, Users, BookOpen, Languages, RefreshCw } from 'lucide-react';
 
 const DataScienceHistoryApp = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentCategory, setCurrentCategory] = useState('all');
-  const [language, setLanguage] = useState('es'); // 'es' or 'en'
+  const [language, setLanguage] = useState('es');
+  const [events, setEvents] = useState([]);
+  const [error, setError] = useState(null);
 
   // Language dictionaries
   const translations = {
@@ -33,6 +36,9 @@ const DataScienceHistoryApp = () => {
       title: 'EFEMÉRIDES DE CIENCIA DE DATOS',
       noEvents: 'No hay eventos para esta fecha en la categoría seleccionada.',
       share: 'Compartir',
+      refresh: 'Actualizar',
+      fetching: 'Buscando eventos históricos...',
+      error: 'Error al cargar eventos. Intenta nuevamente.',
       stats: {
         dates: 'Fechas Históricas',
         events: 'Eventos Registrados',
@@ -71,6 +77,9 @@ const DataScienceHistoryApp = () => {
       title: 'DATA SCIENCE MILESTONES',
       noEvents: 'No events for this date in the selected category.',
       share: 'Share',
+      refresh: 'Refresh',
+      fetching: 'Fetching historical events...',
+      error: 'Error loading events. Try again.',
       stats: {
         dates: 'Historical Dates',
         events: 'Registered Events',
@@ -87,249 +96,71 @@ const DataScienceHistoryApp = () => {
     }
   };
 
-  // Comprehensive data science landmarks database with bilingual support
-  const dataScienceLandmarks = {
-    '8-9': [
-      { 
-        year: 1995, 
-        event: {
-          es: "Netscape Communications realizó su OPI, impulsando la era web comercial y estableciendo nuevas métricas para la valoración de empresas basadas en datos.",
-          en: "Netscape Communications went public with its IPO, launching the commercial web era and establishing new metrics for data-based company valuation."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-    '8-10': [
-      { 
-        year: 1981, 
-        event: {
-          es: "IBM lanzó su primera computadora personal, democratizando el acceso a la tecnología y creando nuevos estándares para el procesamiento de información personal.",
-          en: "IBM launched its first personal computer, democratizing access to technology and creating new standards for personal information processing."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-    '8-11': [
-      { 
-        year: 1950, 
-        event: {
-          es: "Nació Steve Wozniak, cuyo trabajo en Apple revolucionó la arquitectura de sistemas de información personal y el almacenamiento de datos domésticos.",
-          en: "Steve Wozniak was born, whose work at Apple revolutionized personal information system architecture and home data storage."
-        },
-        category: 'people',
-        icon: 'Users'
-      }
-    ],
-    '8-12': [
-      { 
-        year: 1981, 
-        event: {
-          es: "IBM introdujo el PC DOS 1.0, estableciendo protocolos fundamentales para la gestión de archivos y organización de datos en sistemas operativos.",
-          en: "IBM introduced PC DOS 1.0, establishing fundamental protocols for file management and data organization in operating systems."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-    
-    // Historical milestones
-    '1-15': [
-      {
-        year: 1962,
-        event: {
-          es: "John Tukey publica 'El Futuro del Análisis de Datos', vislumbrando la convergencia de estadística y computación, pionero del 'análisis exploratorio de datos'.",
-          en: "John Tukey publishes 'The Future of Data Analysis', foreshadowing the convergence of statistics and computing, pioneering 'exploratory data analysis'."
-        },
-        category: 'statistics',
-        icon: 'BookOpen'
-      }
-    ],
-    '3-12': [
-      {
-        year: 1974,
-        event: {
-          es: "Peter Naur acuña el término 'Ciencia de Datos' para describir una nueva profesión enfocada en construir y manejar modelos de datos.",
-          en: "Peter Naur coins the term 'Data Science' to describe a new profession focused on building and handling data models."
-        },
-        category: 'science',
-        icon: 'Database'
-      }
-    ],
-    '6-21': [
-      {
-        year: 1977,
-        event: {
-          es: "Se funda la International Association for Statistical Computing (IASC), vinculando metodología estadística tradicional con tecnología computacional moderna.",
-          en: "The International Association for Statistical Computing (IASC) is founded, linking traditional statistical methodology with modern computer technology."
-        },
-        category: 'statistics',
-        icon: 'BookOpen'
-      }
-    ],
-    '5-11': [
-      {
-        year: 1997,
-        event: {
-          es: "IBM Deep Blue vence al campeón de ajedrez, demostración histórica de inteligencia artificial y poder computacional.",
-          en: "IBM Deep Blue defeats the chess champion, a historic demonstration of artificial intelligence and computational power."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-    '4-26': [
-      {
-        year: 2001,
-        event: {
-          es: "William S. Cleveland publica 'Ciencia de Datos: Un Plan de Acción', expandiendo la estadística hacia un campo más amplio de ciencia de datos.",
-          en: "William S. Cleveland publishes 'Data Science: An Action Plan', expanding statistics into the broader field of data science."
-        },
-        category: 'science',
-        icon: 'Database'
-      }
-    ],
-    '12-28': [
-      {
-        year: 2006,
-        event: {
-          es: "Se libera Hadoop 0.1.0, proporcionando un framework open-source para procesar datasets masivos, permitiendo la era moderna del 'Big Data'.",
-          en: "Hadoop 0.1.0 is released, providing an open-source framework for processing massive datasets, enabling the modern 'Big Data' era."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-    '9-15': [
-      {
-        year: 2008,
-        event: {
-          es: "El término 'Científico de Datos' se populariza gracias a DJ Patil y Jeff Hammerbacher en LinkedIn y Facebook.",
-          en: "The term 'Data Scientist' becomes popularized by DJ Patil and Jeff Hammerbacher at LinkedIn and Facebook."
-        },
-        category: 'people',
-        icon: 'Users'
-      }
-    ],
-    '11-13': [
-      {
-        year: 2015,
-        event: {
-          es: "Google anuncia un avance del 49% en reconocimiento de voz, mostrando el poder del deep learning para procesamiento de datos.",
-          en: "Google announces a 49% breakthrough in speech recognition, showcasing the power of deep learning for data processing."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ],
-
-    // Pioneers and their birthdays
-    '12-10': [
-      {
-        year: 1815,
-        event: {
-          es: "Nace Ada Lovelace, considerada la primera programadora de computadoras, escribió el primer algoritmo para la Máquina Analítica de Babbage.",
-          en: "Ada Lovelace is born, considered the first computer programmer, she wrote the first algorithm for Babbage's Analytical Engine."
-        },
-        category: 'people',
-        icon: 'Users'
-      }
-    ],
-    '6-23': [
-      {
-        year: 1912,
-        event: {
-          es: "Nace Alan Turing, padre de la ciencia computacional teórica e inteligencia artificial, desarrolló la Máquina de Turing.",
-          en: "Alan Turing is born, father of theoretical computer science and artificial intelligence, developed the Turing Machine."
-        },
-        category: 'people',
-        icon: 'Users'
-      }
-    ],
-    '6-16': [
-      {
-        year: 1915,
-        event: {
-          es: "Nace John Tukey, estadístico que acuñó el término 'bit' y pionero del análisis exploratorio de datos.",
-          en: "John Tukey is born, statistician who coined the term 'bit' and pioneered exploratory data analysis."
-        },
-        category: 'statistics',
-        icon: 'BookOpen'
-      }
-    ],
-    '4-30': [
-      {
-        year: 1916,
-        event: {
-          es: "Nace Claude Shannon, fundador de la teoría de la información, estableció el bit como unidad fundamental de información.",
-          en: "Claude Shannon is born, founder of information theory, established the bit as the fundamental unit of information."
-        },
-        category: 'science',
-        icon: 'Database'
-      }
-    ],
-    '2-17': [
-      {
-        year: 1890,
-        event: {
-          es: "Nace Ronald Fisher, desarrolló métodos fundamentales para diseño experimental e inferencia estadística.",
-          en: "Ronald Fisher is born, developed fundamental methods for experimental design and statistical inference."
-        },
-        category: 'statistics',
-        icon: 'BookOpen'
-      }
-    ],
-    '8-26': [
-      {
-        year: 1935,
-        event: {
-          es: "Nace Karen Spärck Jones, cuyo trabajo en frecuencia inversa de documentos es fundamental para los motores de búsqueda modernos.",
-          en: "Karen Spärck Jones is born, whose work on inverse document frequency is fundamental to modern search engines."
-        },
-        category: 'people',
-        icon: 'Users'
-      }
-    ]
-  };
-
   const t = translations[language];
-
-  const getDateKey = (date) => {
-    return `${date.getMonth() + 1}-${date.getDate()}`;
-  };
-
-  const getCurrentEvents = () => {
-    const key = getDateKey(currentDate);
-    const events = dataScienceLandmarks[key] || [
-      { 
-        year: 1991, 
-        event: {
-          es: "Tim Berners-Lee libera el World Wide Web al público, estableciendo los protocolos HTTP y HTML que revolucionaron el intercambio global de información.",
-          en: "Tim Berners-Lee releases the World Wide Web to the public, establishing HTTP and HTML protocols that revolutionized global information exchange."
-        },
-        category: 'tech',
-        icon: 'Cpu'
-      }
-    ];
-    
-    if (currentCategory === 'all') {
-      return events;
-    }
-    return events.filter(event => event.category === currentCategory);
-  };
 
   const formatDate = (date) => {
     return `${t.days[date.getDay()]}, ${date.getDate()} ${language === 'es' ? 'de' : 'of'} ${t.months[date.getMonth()]} ${language === 'es' ? 'de' : ''} ${date.getFullYear()}`;
   };
 
-  const loadingSteps = t.loadingSteps;
-  const categories = t.categories.map(cat => ({
-    ...cat,
-    icon: { all: Database, tech: Cpu, science: Database, statistics: BookOpen, people: Users }[cat.id]
-  }));
+  const getMonthName = (date) => {
+    return t.months[date.getMonth()];
+  };
 
+  // Fetch real events from backend edge function
+  const fetchHistoricalEvents = async (date) => {
+    setIsFetching(true);
+    setError(null);
+
+    const day = date.getDate();
+    const month = getMonthName(date);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-history-events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          day,
+          month,
+          language
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch events');
+      }
+
+      const data = await response.json();
+      setEvents(data.events || []);
+      
+      if (data.isFallback) {
+        console.warn('Using fallback data');
+      }
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
+      // Fallback to example data
+      setEvents([
+        {
+          year: 1981,
+          event: language === 'es' 
+            ? "IBM lanzó su primera computadora personal, democratizando el acceso a la tecnología."
+            : "IBM launched its first personal computer, democratizing access to technology.",
+          category: 'tech',
+          icon: 'Cpu'
+        }
+      ]);
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  // Initial loading animation
   const [currentStep, setCurrentStep] = useState(0);
+  const loadingSteps = t.loadingSteps;
 
   useEffect(() => {
     if (isLoading) {
@@ -344,7 +175,19 @@ const DataScienceHistoryApp = () => {
     }
   }, [currentStep, isLoading, loadingSteps.length]);
 
-  const currentEvents = getCurrentEvents();
+  // Fetch events when date changes or component mounts
+  useEffect(() => {
+    if (!isLoading) {
+      fetchHistoricalEvents(currentDate);
+    }
+  }, [currentDate, language, isLoading]);
+
+  const getCurrentEvents = () => {
+    if (currentCategory === 'all') {
+      return events;
+    }
+    return events.filter(event => event.category === currentCategory);
+  };
 
   const getIconComponent = (iconName) => {
     const icons = {
@@ -372,6 +215,13 @@ const DataScienceHistoryApp = () => {
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'es' ? 'en' : 'es');
   };
+
+  const categories = t.categories.map(cat => ({
+    ...cat,
+    icon: { all: Database, tech: Cpu, science: Database, statistics: BookOpen, people: Users }[cat.id]
+  }));
+
+  const currentEvents = getCurrentEvents();
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono p-4">
@@ -435,10 +285,20 @@ const DataScienceHistoryApp = () => {
 
       {/* Current Date */}
       <div className="border border-green-600 rounded-lg p-4 mb-6">
-        <div className="flex items-center">
-          <Calendar className="w-4 h-4 mr-2" />
-          <span>{t.currentDate} </span>
-          <span className="text-white ml-1">{formatDate(currentDate)}</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Calendar className="w-4 h-4 mr-2" />
+            <span>{t.currentDate} </span>
+            <span className="text-white ml-1">{formatDate(currentDate)}</span>
+          </div>
+          <button
+            onClick={() => fetchHistoricalEvents(currentDate)}
+            disabled={isFetching}
+            className="flex items-center space-x-2 px-3 py-1 border border-green-600 rounded-lg hover:bg-green-900 hover:bg-opacity-20 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${isFetching ? 'animate-spin' : ''}`} />
+            <span className="text-sm">{t.refresh}</span>
+          </button>
         </div>
       </div>
 
@@ -465,6 +325,26 @@ const DataScienceHistoryApp = () => {
         </div>
       </div>
 
+      {/* Fetching Indicator */}
+      {isFetching && (
+        <div className="border border-green-600 rounded-lg p-4 mb-6">
+          <div className="flex items-center">
+            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+            <span>{t.fetching}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="border border-red-600 rounded-lg p-4 mb-6 text-red-400">
+          <div className="flex items-center">
+            <span className="mr-2">⚠</span>
+            <span>{t.error}</span>
+          </div>
+        </div>
+      )}
+
       {/* Daily Ephemeris */}
       <div className="border border-green-600 rounded-lg p-6 mb-6">
         <div className="flex items-center mb-4">
@@ -472,7 +352,7 @@ const DataScienceHistoryApp = () => {
           <h2 className="text-xl font-bold">{t.title}</h2>
         </div>
         
-        {currentEvents.length === 0 ? (
+        {currentEvents.length === 0 && !isFetching ? (
           <div className="text-center py-8">
             <p className="text-gray-500">{t.noEvents}</p>
           </div>
@@ -482,7 +362,7 @@ const DataScienceHistoryApp = () => {
               <div className="flex items-center mb-3">
                 {getIconComponent(event.icon)}
                 <span className="text-lg font-bold ml-2">
-                  {getDateKey(currentDate).replace('-', ` ${language === 'es' ? 'de' : ''} `)} {language === 'es' ? 'de' : ''} {event.year}:
+                  {event.year}:
                 </span>
                 <span className={`ml-2 text-sm ${getCategoryColor(event.category)}`}>
                   {categories.find(cat => cat.id === event.category)?.name}
@@ -490,7 +370,7 @@ const DataScienceHistoryApp = () => {
               </div>
               
               <p className="text-green-300 leading-relaxed mb-4">
-                {event.event[language]}
+                {event.event}
               </p>
 
               {index === currentEvents.length - 1 && (
@@ -507,19 +387,19 @@ const DataScienceHistoryApp = () => {
       {/* Stats Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="border border-green-600 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-white">{Object.keys(dataScienceLandmarks).length}+</div>
-          <div className="text-sm text-green-300">{t.stats.dates}</div>
+          <div className="text-2xl font-bold text-white">{events.length}</div>
+          <div className="text-sm text-green-300">{t.stats.events}</div>
         </div>
         <div className="border border-green-600 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-white">50+</div>
-          <div className="text-sm text-green-300">{t.stats.events}</div>
+          <div className="text-2xl font-bold text-white">365</div>
+          <div className="text-sm text-green-300">{t.stats.dates}</div>
         </div>
         <div className="border border-green-600 rounded-lg p-4 text-center">
           <div className="text-2xl font-bold text-white">4</div>
           <div className="text-sm text-green-300">{t.stats.categories}</div>
         </div>
         <div className="border border-green-600 rounded-lg p-4 text-center">
-          <div className="text-2xl font-bold text-white">3200 BCE+</div>
+          <div className="text-2xl font-bold text-white">200+</div>
           <div className="text-sm text-green-300">{t.stats.years}</div>
         </div>
       </div>

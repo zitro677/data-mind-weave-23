@@ -1,0 +1,4 @@
+project_id = "dsdvhcvcxdhjjfckgowx"
+
+[functions.fetch-history-events]
+verify_jwt = false
