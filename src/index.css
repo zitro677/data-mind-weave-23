@@ -87,4 +87,43 @@ All colors MUST be HSL.
     border: 1px solid hsl(var(--border));
     pointer-events: none;
   }
+  
+  /* Splash Cursor Effect */
+  .splash-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+  
+  .splash-ripple {
+    position: absolute;
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(
+      to bottom,
+      hsl(var(--accent)) 0%,
+      hsl(var(--accent) / 0.6) 50%,
+      transparent 100%
+    );
+    border-radius: 2px;
+    transform-origin: center top;
+    animation: splash-wave 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    rotate: var(--rotation);
+  }
+  
+  @keyframes splash-wave {
+    0% {
+      transform: scaleY(0) translateY(0);
+      opacity: 1;
+    }
+    50% {
+      transform: scaleY(1.2) translateY(-20px);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scaleY(0.8) translateY(-50px) rotateZ(30deg);
+      opacity: 0;
+    }
+  }
 }

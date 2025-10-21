@@ -6,6 +6,7 @@ import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
 import DataHistoryApp from '@/components/DataHistoryApp';
 import LanguageToggle from '@/components/LanguageToggle';
+import SplashCursor from '@/components/SplashCursor';
 import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
@@ -18,6 +19,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SplashCursor />
       <LanguageToggle />
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
