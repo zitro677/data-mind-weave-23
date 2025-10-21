@@ -77,6 +77,7 @@ const Index = () => {
               icon={<Database size={48} strokeWidth={1.5} />}
               title={t('expertise.datascience.title')}
               description={t('expertise.datascience.desc')}
+              link="https://arkanatech.tech/solutions/"
             />
             
             <ExpertiseCard
