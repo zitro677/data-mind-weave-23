@@ -1,7 +1,12 @@
 import React from 'react';
 
+interface LogoItem {
+  name: string;
+  icon: React.ReactNode;
+}
+
 interface LogoLoopProps {
-  items: string[];
+  items: LogoItem[];
   speed?: number;
 }
 
@@ -12,13 +17,15 @@ const LogoLoop: React.FC<LogoLoopProps> = ({ items, speed = 30 }) => {
         {/* First set of items */}
         {items.map((item, idx) => (
           <span key={`first-${idx}`} className="logo-loop-item">
-            {item}
+            <span className="logo-loop-icon">{item.icon}</span>
+            <span>{item.name}</span>
           </span>
         ))}
         {/* Duplicate set for seamless loop */}
         {items.map((item, idx) => (
           <span key={`second-${idx}`} className="logo-loop-item">
-            {item}
+            <span className="logo-loop-icon">{item.icon}</span>
+            <span>{item.name}</span>
           </span>
         ))}
       </div>

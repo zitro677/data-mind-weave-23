@@ -1,4 +1,4 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
@@ -99,7 +99,15 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="border border-border p-12 cyber-border">
             <h3 className="text-2xl font-bold mb-6 text-accent">{t('stack.build')}</h3>
-            <LogoLoop items={['Python', 'Flowise', 'N8N', 'Loveable']} speed={35} />
+            <LogoLoop 
+              items={[
+                { name: 'Python', icon: <Code2 size={24} className="text-accent" /> },
+                { name: 'Flowise', icon: <Workflow size={24} className="text-accent" /> },
+                { name: 'N8N', icon: <Zap size={24} className="text-accent" /> },
+                { name: 'Loveable', icon: <Sparkles size={24} className="text-accent" /> }
+              ]} 
+              speed={35} 
+            />
             <div className="h-px bg-gradient-to-r from-accent via-accent/50 to-transparent mt-6" />
           </div>
         </div>
