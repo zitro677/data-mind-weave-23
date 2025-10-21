@@ -29,7 +29,7 @@ const translations = {
     
     // Technical Stack
     'stack.build': 'Build With:',
-    'stack.explore': 'Explore With:',
+    'stack.hobbies': 'Hobbies:',
     'stack.drone': 'Drone Pilot',
     'stack.photo': 'Photographer',
     
@@ -66,7 +66,7 @@ const translations = {
     
     // Technical Stack
     'stack.build': 'Construyo Con:',
-    'stack.explore': 'Exploro Con:',
+    'stack.hobbies': 'Hobbies:',
     'stack.drone': 'Piloto de Drones',
     'stack.photo': 'Fotógrafo',
     

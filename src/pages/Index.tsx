@@ -93,45 +93,46 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Technical Stack & Hobbies */}
-      <section className="py-24 px-6">
+      {/* Technical Stack */}
+      <section className="py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 border border-border p-12 cyber-border">
-            {/* Professional Stack */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold mb-6 text-accent">{t('stack.build')}</h3>
-              <div className="flex flex-wrap gap-4 items-center">
-                {['Python', 'Flowise', 'N8N', 'Loveable'].map((tech, idx) => (
-                  <span 
-                    key={tech}
-                    className="font-mono text-lg text-foreground relative"
-                  >
-                    {tech}
-                    {idx < 3 && (
-                      <span className="inline-block mx-3 text-accent">|</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-              <div className="h-px bg-gradient-to-r from-accent via-accent/50 to-transparent" />
+          <div className="border border-border p-12 cyber-border">
+            <h3 className="text-2xl font-bold mb-6 text-accent">{t('stack.build')}</h3>
+            <div className="flex flex-wrap gap-4 items-center">
+              {['Python', 'Flowise', 'N8N', 'Loveable'].map((tech, idx) => (
+                <span 
+                  key={tech}
+                  className="font-mono text-lg text-foreground relative"
+                >
+                  {tech}
+                  {idx < 3 && (
+                    <span className="inline-block mx-3 text-accent">|</span>
+                  )}
+                </span>
+              ))}
             </div>
-            
-            {/* Creative Pursuits */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.explore')}</h3>
-              <div className="flex gap-8 items-center">
-                <div className="flex items-center gap-3">
-                  <Plane size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">{t('stack.drone')}</span>
-                </div>
-                <span className="text-magenta text-2xl">|</span>
-                <div className="flex items-center gap-3">
-                  <Camera size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">{t('stack.photo')}</span>
-                </div>
+            <div className="h-px bg-gradient-to-r from-accent via-accent/50 to-transparent mt-6" />
+          </div>
+        </div>
+      </section>
+
+      {/* Hobbies */}
+      <section className="py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="border border-border p-12 cyber-border">
+            <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
+            <div className="flex gap-8 items-center">
+              <div className="flex items-center gap-3">
+                <Plane size={32} className="text-magenta" strokeWidth={1.5} />
+                <span className="text-lg">{t('stack.drone')}</span>
               </div>
-              <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent" />
+              <span className="text-magenta text-2xl">|</span>
+              <div className="flex items-center gap-3">
+                <Camera size={32} className="text-magenta" strokeWidth={1.5} />
+                <span className="text-lg">{t('stack.photo')}</span>
+              </div>
             </div>
+            <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6" />
           </div>
         </div>
       </section>
