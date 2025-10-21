@@ -127,6 +127,61 @@ All colors MUST be HSL.
     }
   }
 
+  /* Logo Loop Animation */
+  .logo-loop-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+  }
+
+  .logo-loop-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee linear infinite;
+    width: fit-content;
+  }
+
+  .logo-loop-track:hover {
+    animation-play-state: paused;
+  }
+
+  .logo-loop-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.125rem;
+    color: hsl(var(--foreground));
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-loop-track {
+      animation: none;
+    }
+  }
+
   /* Profile Card Styles */
   .pc-card-wrapper {
     perspective: 500px;

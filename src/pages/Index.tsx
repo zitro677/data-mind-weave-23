@@ -8,6 +8,7 @@ import LanguageToggle from '@/components/LanguageToggle';
 import SplashCursor from '@/components/SplashCursor';
 import ProfileCard from '@/components/ProfileCard';
 import PixelBlast from '@/components/PixelBlast';
+import LogoLoop from '@/components/LogoLoop';
 import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
@@ -98,19 +99,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="border border-border p-12 cyber-border">
             <h3 className="text-2xl font-bold mb-6 text-accent">{t('stack.build')}</h3>
-            <div className="flex flex-wrap gap-4 items-center">
-              {['Python', 'Flowise', 'N8N', 'Loveable'].map((tech, idx) => (
-                <span 
-                  key={tech}
-                  className="font-mono text-lg text-foreground relative"
-                >
-                  {tech}
-                  {idx < 3 && (
-                    <span className="inline-block mx-3 text-accent">|</span>
-                  )}
-                </span>
-              ))}
-            </div>
+            <LogoLoop items={['Python', 'Flowise', 'N8N', 'Loveable']} speed={35} />
             <div className="h-px bg-gradient-to-r from-accent via-accent/50 to-transparent mt-6" />
           </div>
         </div>
