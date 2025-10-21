@@ -34,7 +34,7 @@ const Index = () => {
                 name="Luis Ortiz"
                 title=""
                 handle="zitro677"
-                status="Online"
+                status={t('profile.status')}
                 contactText={t('hero.cta')}
                 showUserInfo={true}
                 onContactClick={scrollToExpertise}

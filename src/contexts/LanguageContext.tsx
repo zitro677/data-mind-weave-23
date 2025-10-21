@@ -45,6 +45,9 @@ const translations = {
     'footer.linkedin': 'LinkedIn',
     'footer.email': 'Email',
     'footer.copyright': 'Systems in Motion.',
+    
+    // Profile
+    'profile.status': 'Online',
   },
   es: {
     // Hero Section
@@ -82,6 +85,9 @@ const translations = {
     'footer.linkedin': 'LinkedIn',
     'footer.email': 'Correo',
     'footer.copyright': 'Sistemas en Movimiento.',
+    
+    // Profile
+    'profile.status': 'En línea',
   },
 };
 
