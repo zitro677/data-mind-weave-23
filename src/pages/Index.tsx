@@ -7,6 +7,7 @@ import DataHistoryApp from '@/components/DataHistoryApp';
 import LanguageToggle from '@/components/LanguageToggle';
 import SplashCursor from '@/components/SplashCursor';
 import ProfileCard from '@/components/ProfileCard';
+import PixelBlast from '@/components/PixelBlast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
@@ -23,6 +24,7 @@ const Index = () => {
       <LanguageToggle />
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
+        <PixelBlast />
         <div className="max-w-7xl w-full mx-auto">
           <div className="flex flex-col items-center gap-12">
             <div className="flex justify-center items-center">
