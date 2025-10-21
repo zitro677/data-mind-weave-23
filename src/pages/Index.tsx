@@ -1,4 +1,4 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
@@ -104,7 +104,12 @@ const Index = () => {
                 { name: 'Python', icon: <Code2 size={24} className="text-accent" /> },
                 { name: 'Flowise', icon: <Workflow size={24} className="text-accent" /> },
                 { name: 'N8N', icon: <Zap size={24} className="text-accent" /> },
-                { name: 'Loveable', icon: <Sparkles size={24} className="text-accent" /> }
+                { name: 'Loveable', icon: <Sparkles size={24} className="text-accent" /> },
+                { name: 'Docker', icon: <Container size={24} className="text-accent" /> },
+                { name: 'TP', icon: <Cpu size={24} className="text-accent" /> },
+                { name: 'Codex', icon: <Terminal size={24} className="text-accent" /> },
+                { name: 'Langchain', icon: <Link size={24} className="text-accent" /> },
+                { name: 'GitHub', icon: <Github size={24} className="text-accent" /> }
               ]} 
               speed={35} 
             />
