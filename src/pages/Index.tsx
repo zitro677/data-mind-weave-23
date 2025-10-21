@@ -53,9 +53,9 @@ const Index = () => {
             <div className="flex justify-center items-center order-1 md:order-2">
               <ProfileCard
                 avatarUrl={profilePhoto}
-                name={t('hero.title')}
+                name="Luis Ortiz"
                 title={t('hero.subtitle')}
-                handle="javicodes"
+                handle="zitro677"
                 status="Online"
                 contactText={t('hero.cta')}
                 showUserInfo={true}
