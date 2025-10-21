@@ -24,25 +24,8 @@ const Index = () => {
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
         <div className="max-w-7xl w-full mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 order-2 md:order-1">
-              <div className="space-y-2">
-                <TypingText 
-                  text={t('hero.typing')}
-                  className="text-lg text-accent"
-                />
-              </div>
-              
-              <Button
-                onClick={scrollToExpertise}
-                variant="outline"
-                className="mt-8 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-              >
-                {t('hero.cta')}
-              </Button>
-            </div>
-            
-            <div className="flex justify-center items-center order-1 md:order-2">
+          <div className="flex flex-col items-center gap-12">
+            <div className="flex justify-center items-center">
               <ProfileCard
                 avatarUrl={profilePhoto}
                 name="Luis Ortiz"
@@ -53,6 +36,21 @@ const Index = () => {
                 showUserInfo={true}
                 onContactClick={scrollToExpertise}
               />
+            </div>
+            
+            <div className="space-y-6 text-center">
+              <TypingText 
+                text={t('hero.typing')}
+                className="text-lg text-accent"
+              />
+              
+              <Button
+                onClick={scrollToExpertise}
+                variant="outline"
+                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+              >
+                {t('hero.cta')}
+              </Button>
             </div>
           </div>
         </div>
