@@ -26,15 +26,7 @@ const Index = () => {
         <div className="max-w-7xl w-full mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
-              <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
-                {t('hero.title')}
-              </h1>
-              
               <div className="space-y-2">
-                <p className="text-xl text-muted-foreground">
-                  {t('hero.subtitle')}
-                </p>
-                
                 <TypingText 
                   text={t('hero.typing')}
                   className="text-lg text-accent"
@@ -54,7 +46,7 @@ const Index = () => {
               <ProfileCard
                 avatarUrl={profilePhoto}
                 name="Luis Ortiz"
-                title={t('hero.subtitle')}
+                title=""
                 handle="zitro677"
                 status="Online"
                 contactText={t('hero.cta')}
