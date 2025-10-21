@@ -1,12 +1,12 @@
 import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
 import DataHistoryApp from '@/components/DataHistoryApp';
 import LanguageToggle from '@/components/LanguageToggle';
 import SplashCursor from '@/components/SplashCursor';
+import ProfileCard from '@/components/ProfileCard';
 import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
@@ -24,18 +24,8 @@ const Index = () => {
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
         <div className="max-w-7xl w-full mx-auto">
-          <div className="flex justify-center mb-12">
-            <div className="relative">
-              <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full"></div>
-              <Avatar className="w-48 h-48 border-4 border-accent shadow-2xl relative">
-                <AvatarImage src={profilePhoto} alt="Profile" />
-                <AvatarFallback className="text-4xl bg-card text-foreground">JD</AvatarFallback>
-              </Avatar>
-            </div>
-          </div>
-          
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+            <div className="space-y-6 order-2 md:order-1">
               <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
                 {t('hero.title')}
               </h1>
@@ -60,8 +50,17 @@ const Index = () => {
               </Button>
             </div>
             
-            <div className="flex justify-center items-center">
-              <WireframeCube />
+            <div className="flex justify-center items-center order-1 md:order-2">
+              <ProfileCard
+                avatarUrl={profilePhoto}
+                name={t('hero.title')}
+                title={t('hero.subtitle')}
+                handle="javicodes"
+                status="Online"
+                contactText={t('hero.cta')}
+                showUserInfo={true}
+                onContactClick={scrollToExpertise}
+              />
             </div>
           </div>
         </div>
