@@ -90,6 +90,7 @@ const Index = () => {
               icon={<BookOpen size={48} strokeWidth={1.5} />}
               title={t('expertise.research.title')}
               description={t('expertise.research.desc')}
+              link="https://orcid.org/0000-0003-2328-3245"
             />
           </div>
         </div>
@@ -148,7 +149,7 @@ const Index = () => {
               {t('academic.title')}
             </h3>
             <p className="text-xl text-muted-foreground">
-              {t('academic.subtitle')} <a href="#" className="text-accent hover:underline">{t('academic.orcid')}</a>
+              {t('academic.subtitle')} <a href="https://orcid.org/0000-0003-2328-3245" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{t('academic.orcid')}</a>
             </p>
           </div>
           
@@ -188,7 +189,7 @@ const Index = () => {
           
           <div className="flex justify-center gap-8 text-muted-foreground">
             <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.linkedin')}</a>
-            <a href="#" className="hover:text-accent transition-colors font-mono">{t('academic.orcid')}</a>
+            <a href="https://orcid.org/0000-0003-2328-3245" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors font-mono">{t('academic.orcid')}</a>
             <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.email')}</a>
           </div>
           
