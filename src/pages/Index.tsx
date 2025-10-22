@@ -155,7 +155,9 @@ const Index = () => {
           
           <div className="flex justify-center gap-6">
             <a 
-              href="#" 
+              href="https://orcid.org/0000-0003-2328-3245"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
             >
               <Network size={24} />
