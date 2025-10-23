@@ -9,6 +9,7 @@ import SplashCursor from '@/components/SplashCursor';
 import ProfileCard from '@/components/ProfileCard';
 import PixelBlast from '@/components/PixelBlast';
 import LogoLoop from '@/components/LogoLoop';
+import ElectricBorder from '@/components/ElectricBorder';
 import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
@@ -123,7 +124,13 @@ const Index = () => {
       {/* Hobbies */}
       <section className="py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="border border-border p-12 cyber-border">
+          <ElectricBorder 
+            color="#ff00ff"
+            speed={1.2}
+            chaos={1}
+            thickness={2}
+            className="p-12 rounded-lg"
+          >
             <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
             <div className="flex gap-8 items-center">
               <div className="flex items-center gap-3">
@@ -137,7 +144,7 @@ const Index = () => {
               </div>
             </div>
             <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6" />
-          </div>
+          </ElectricBorder>
         </div>
       </section>
 
