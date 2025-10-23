@@ -20,6 +20,10 @@ const Index = () => {
     document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const openTwitterProfile = () => {
+    window.open('https://twitter.com/TechArkana72223', '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SplashCursor />
@@ -36,9 +40,9 @@ const Index = () => {
                 title=""
                 handle="zitro677"
                 status={t('profile.status')}
-                contactText={t('hero.cta')}
+                contactText="@TechArkana72223"
                 showUserInfo={true}
-                onContactClick={scrollToExpertise}
+                onContactClick={openTwitterProfile}
               />
             </div>
             
