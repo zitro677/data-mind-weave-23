@@ -1,4 +1,4 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Facebook, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
@@ -189,10 +189,25 @@ const Index = () => {
             {t('footer.tagline')}
           </p>
           
-          <div className="flex justify-center gap-8 text-muted-foreground">
-            <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.linkedin')}</a>
-            <a href="https://orcid.org/0000-0003-2328-3245" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors font-mono">{t('academic.orcid')}</a>
-            <a href="#" className="hover:text-accent transition-colors font-mono">{t('footer.email')}</a>
+          <div className="flex justify-center gap-6 text-muted-foreground">
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Twitter">
+              <Twitter size={24} />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="LinkedIn">
+              <Linkedin size={24} />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Facebook">
+              <Facebook size={24} />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Website">
+              <Link size={24} />
+            </a>
+            <a href="#" className="hover:text-accent transition-colors" aria-label="Email">
+              <Mail size={24} />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="GitHub">
+              <Github size={24} />
+            </a>
           </div>
           
           <p className="text-sm text-muted-foreground font-mono pt-8">
