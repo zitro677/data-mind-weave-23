@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Code2, Share, Terminal, Database, Cpu, Users, BookOpen, Languages, RefreshCw } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const DataScienceHistoryApp = () => {
+  const { language: globalLanguage } = useLanguage();
+  const language = globalLanguage;
+  
   const [isLoading, setIsLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentCategory, setCurrentCategory] = useState('all');
-  const [language, setLanguage] = useState('es');
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
 
@@ -212,10 +215,6 @@ const DataScienceHistoryApp = () => {
     return colors[category] || 'text-green-400';
   };
 
-  const toggleLanguage = () => {
-    setLanguage(prev => prev === 'es' ? 'en' : 'es');
-  };
-
   const categories = t.categories.map(cat => ({
     ...cat,
     icon: { all: Database, tech: Cpu, science: Database, statistics: BookOpen, people: Users }[cat.id]
@@ -232,13 +231,6 @@ const DataScienceHistoryApp = () => {
           <span className="text-gray-400">{t.appName}</span>
         </div>
         <div className="flex items-center space-x-3">
-          <button 
-            onClick={toggleLanguage}
-            className="flex items-center space-x-2 px-3 py-1 border border-green-600 rounded-lg hover:bg-green-900 hover:bg-opacity-20 transition-colors"
-          >
-            <Languages className="w-4 h-4" />
-            <span className="text-sm">{language === 'es' ? 'EN' : 'ES'}</span>
-          </button>
           <div className="flex items-center space-x-1">
             <span className="w-2 h-2 bg-green-400 rounded-full"></span>
             <span className="text-white font-bold">{t.domain}</span>
