@@ -131,19 +131,21 @@ const Index = () => {
             thickness={2}
             className="p-12 rounded-lg"
           >
-            <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
-            <div className="flex gap-8 items-center">
-              <div className="flex items-center gap-3">
-                <Plane size={32} className="text-magenta" strokeWidth={1.5} />
-                <span className="text-lg">{t('stack.drone')}</span>
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
+              <div className="flex gap-8 items-center justify-center">
+                <div className="flex items-center gap-3">
+                  <Plane size={32} className="text-magenta" strokeWidth={1.5} />
+                  <span className="text-lg">{t('stack.drone')}</span>
+                </div>
+                <span className="text-magenta text-2xl">|</span>
+                <div className="flex items-center gap-3">
+                  <Camera size={32} className="text-magenta" strokeWidth={1.5} />
+                  <span className="text-lg">{t('stack.photo')}</span>
+                </div>
               </div>
-              <span className="text-magenta text-2xl">|</span>
-              <div className="flex items-center gap-3">
-                <Camera size={32} className="text-magenta" strokeWidth={1.5} />
-                <span className="text-lg">{t('stack.photo')}</span>
-              </div>
+              <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6 mx-auto max-w-md" />
             </div>
-            <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6" />
           </ElectricBorder>
         </div>
       </section>
