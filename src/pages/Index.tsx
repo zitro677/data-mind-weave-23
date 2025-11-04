@@ -203,22 +203,22 @@ const Index = () => {
           </p>
           
           <div className="flex justify-center gap-6 text-muted-foreground">
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Twitter">
+            <a href="https://twitter.com/zitro677" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Twitter">
               <Twitter size={24} />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="LinkedIn">
+            <a href="https://linkedin.com/in/luis-ali-ortiz-martinez-454b9139" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="LinkedIn">
               <Linkedin size={24} />
             </a>
             <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Facebook">
               <Facebook size={24} />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Website">
+            <a href="https://arkanatech.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Website">
               <Link size={24} />
             </a>
-            <a href="#" className="hover:text-accent transition-colors" aria-label="Email">
+            <a href="mailto:info@arkanatech.tech" className="hover:text-accent transition-colors" aria-label="Email">
               <Mail size={24} />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="GitHub">
+            <a href="https://github.com/zitro677" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="GitHub">
               <Github size={24} />
             </a>
           </div>
