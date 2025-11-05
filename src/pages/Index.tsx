@@ -33,17 +33,25 @@ const Index = () => {
         <PixelBlast />
         <div className="max-w-7xl w-full mx-auto">
           <div className="flex flex-col items-center gap-12">
-            <div className="flex justify-center items-center">
-              <ProfileCard
-                avatarUrl={profilePhoto}
-                name="Luis Ortiz"
-                title=""
-                handle="zitro677"
-                status={t('profile.status')}
-                contactText="@TechArkana72223"
-                showUserInfo={true}
-                onContactClick={openTwitterProfile}
-              />
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+              {/* Left side: ElevenLabs Widget */}
+              <div className="flex justify-center items-center">
+                <elevenlabs-convai agent-id="agent_8501k9a898asenfaekt9cvf6mdah"></elevenlabs-convai>
+              </div>
+              
+              {/* Right side: ProfileCard */}
+              <div className="flex justify-center items-center">
+                <ProfileCard
+                  avatarUrl={profilePhoto}
+                  name="Luis Ortiz"
+                  title=""
+                  handle="zitro677"
+                  status={t('profile.status')}
+                  contactText="@TechArkana72223"
+                  showUserInfo={true}
+                  onContactClick={openTwitterProfile}
+                />
+              </div>
             </div>
             
             <div className="space-y-6 text-center">
