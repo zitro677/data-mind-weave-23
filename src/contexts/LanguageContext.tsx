@@ -13,7 +13,7 @@ const translations = {
     // Hero Section
     'hero.title': 'Luis Ortiz',
     'hero.subtitle': 'Information Scientist | AI Systems Architect',
-    'hero.typing': 'Bridging Data Repositories <> Intelligent Applications.',
+    'hero.typing': 'Data, Information, Knowledge, AI',
     'hero.cta': 'Explore My Work',
     
     // Expertise Section
@@ -53,7 +53,7 @@ const translations = {
     // Hero Section
     'hero.title': 'Luis Ortiz',
     'hero.subtitle': 'Científico de la Información | Arquitecto de Sistemas de IA',
-    'hero.typing': 'Conectando Repositorios de Datos <> Aplicaciones Inteligentes.',
+    'hero.typing': 'Datos, Información, Conocimiento, AI',
     'hero.cta': 'Explora Mi Trabajo',
     
     // Expertise Section
