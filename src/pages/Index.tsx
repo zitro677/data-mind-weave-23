@@ -1,4 +1,4 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Facebook, Mail } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
@@ -216,9 +216,6 @@ const Index = () => {
             </a>
             <a href="https://linkedin.com/in/luis-ali-ortiz-martinez-454b9139" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="LinkedIn">
               <Linkedin size={24} />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Facebook">
-              <Facebook size={24} />
             </a>
             <a href="https://arkanatech.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors" aria-label="Website">
               <Link size={24} />
