@@ -15,6 +15,7 @@ const translations = {
     'hero.subtitle': 'Information Scientist | AI Systems Architect',
     'hero.typing': 'Data, Information, Knowledge, AI',
     'hero.cta': 'Explore My Work',
+    'hero.downloadCV': 'Download CV',
     
     // Expertise Section
     'expertise.title': 'Core Domains',
@@ -55,6 +56,7 @@ const translations = {
     'hero.subtitle': 'Científico de la Información | Arquitecto de Sistemas de IA',
     'hero.typing': 'Datos, Información, Conocimiento, AI',
     'hero.cta': 'Explora Mi Trabajo',
+    'hero.downloadCV': 'Descargar CV',
     
     // Expertise Section
     'expertise.title': 'Dominios Principales',
