@@ -1,4 +1,4 @@
-import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Mail, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
@@ -60,13 +60,25 @@ const Index = () => {
                 className="text-lg text-accent"
               />
               
-              <Button
-                onClick={scrollToExpertise}
-                variant="outline"
-                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-              >
-                {t('hero.cta')}
-              </Button>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Button
+                  onClick={scrollToExpertise}
+                  variant="outline"
+                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                >
+                  {t('hero.cta')}
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                >
+                  <a href="/cv-luis-ortiz.pdf" download>
+                    <Download size={18} />
+                    {t('hero.downloadCV')}
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
