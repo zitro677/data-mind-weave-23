@@ -14,7 +14,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import profilePhoto from '@/assets/profile.jpg';
 
 const Index = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const scrollToExpertise = () => {
     document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +73,7 @@ const Index = () => {
                   variant="outline"
                   className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                 >
-                  <a href="/cv-luis-ortiz.pdf" download>
+                  <a href={language === 'en' ? '/cv-luis-ortiz-en.pdf' : '/cv-luis-ortiz-es.pdf'} download>
                     <Download size={18} />
                     {t('hero.downloadCV')}
                   </a>
