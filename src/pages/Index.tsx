@@ -16,9 +16,6 @@ import profilePhoto from '@/assets/profile.jpg';
 const Index = () => {
   const { t, language } = useLanguage();
   
-  const scrollToExpertise = () => {
-    document.getElementById('expertise')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const openTwitterProfile = () => {
     window.open('https://twitter.com/TechArkana72223', '_blank');
@@ -62,11 +59,13 @@ const Index = () => {
               
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button
-                  onClick={scrollToExpertise}
+                  asChild
                   variant="outline"
                   className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                 >
-                  {t('hero.cta')}
+                  <a href="https://arkanatech.tech/portfolio/" target="_blank" rel="noopener noreferrer">
+                    {t('hero.cta')}
+                  </a>
                 </Button>
                 <Button
                   asChild
