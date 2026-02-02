@@ -1,54 +1,52 @@
 
+## Update "Explore My Work" Button Link
 
-# Add CV Download Button
+### Summary
+Change the "Explore My Work" / "Explora Mi Trabajo" button to link to your portfolio at https://arkanatech.tech/portfolio/ instead of scrolling to the expertise section.
 
-## Overview
-Add a button to download your CV in PDF format. The button will be placed in the Hero section, near the existing "Explore My Work" button, and will support both English and Spanish languages.
+---
 
-## Implementation Steps
+### Changes
 
-### Step 1: Add Your CV PDF File
-You'll need to provide your CV PDF file. I'll place it in the `public` folder so it can be downloaded directly.
+**File: `src/pages/Index.tsx`**
 
-**File location:** `public/cv-luis-ortiz.pdf`
+1. **Convert the button from onClick to a link** (lines 64-70)
+   - Change from `Button` with `onClick` to `Button` with `asChild` wrapping an `<a>` tag
+   - Set the href to `https://arkanatech.tech/portfolio/`
+   - Open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`
 
-### Step 2: Add Translation Keys
-Add bilingual text for the download button in `src/contexts/LanguageContext.tsx`:
+2. **Remove unused function** (lines 19-21)
+   - The `scrollToExpertise` function will no longer be needed and can be removed
 
-| Key | English | Spanish |
-|-----|---------|---------|
-| `hero.downloadCV` | Download CV | Descargar CV |
+---
 
-### Step 3: Add Download Button to Hero Section
-Modify `src/pages/Index.tsx` to include a new download button:
+### Technical Details
 
-- Import the `Download` icon from `lucide-react`
-- Add a new button next to the existing "Explore My Work" button
-- The button will use the `<a>` tag with `download` attribute wrapped in a styled Button component
-- Style it consistently with the existing button (outline variant, accent colors)
-
-**Button placement:** In the Hero section, alongside the existing CTA button, creating a row of two buttons:
+**Current code:**
+```tsx
+<Button
+  onClick={scrollToExpertise}
+  variant="outline"
+  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+>
+  {t('hero.cta')}
+</Button>
 ```
-[Explore My Work] [Download CV]
+
+**New code:**
+```tsx
+<Button
+  asChild
+  variant="outline"
+  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+>
+  <a href="https://arkanatech.tech/portfolio/" target="_blank" rel="noopener noreferrer">
+    {t('hero.cta')}
+  </a>
+</Button>
 ```
 
-### Step 4: Button Design
-- Use the `Download` icon from lucide-react
-- Apply the same styling as the existing button (outline variant)
-- Add a subtle hover effect
-- The button will trigger a direct PDF download when clicked
+---
 
-## Technical Details
-
-**Files to modify:**
-1. `src/contexts/LanguageContext.tsx` - Add translation keys
-2. `src/pages/Index.tsx` - Add the download button with Download icon
-
-**Files to add:**
-1. `public/cv-luis-ortiz.pdf` - Your CV file (you'll need to provide this)
-
-**Download approach:** Using an anchor tag with the `download` attribute ensures the PDF downloads directly rather than opening in a new tab.
-
-## Important Note
-You'll need to upload your CV PDF file. After I implement the button, please upload your CV and I'll add it to the `public` folder with the correct filename.
-
+### Result
+Both the English ("Explore My Work") and Spanish ("Explora Mi Trabajo") versions of the button will open your portfolio page at arkanatech.tech in a new browser tab.
