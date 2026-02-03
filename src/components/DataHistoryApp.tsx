@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Code2, Share, Terminal, Database, Cpu, Users, BookOpen, Languages, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Calendar, Code2, Share, Terminal, Database, Cpu, Users, BookOpen, Languages, RefreshCw, Facebook, Twitter, Instagram, Link2, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const DataScienceHistoryApp = () => {
@@ -12,7 +12,9 @@ const DataScienceHistoryApp = () => {
   const [currentCategory, setCurrentCategory] = useState('all');
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
-
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
   // Language dictionaries
   const translations = {
     es: {
@@ -39,6 +41,9 @@ const DataScienceHistoryApp = () => {
       title: 'EFEMÉRIDES DE CIENCIA DE DATOS',
       noEvents: 'No hay eventos para esta fecha en la categoría seleccionada.',
       share: 'Compartir',
+      shareOn: 'Compartir en',
+      copyLink: 'Copiar enlace',
+      linkCopied: '¡Enlace copiado!',
       refresh: 'Actualizar',
       fetching: 'Buscando eventos históricos...',
       error: 'Error al cargar eventos. Intenta nuevamente.',
@@ -80,6 +85,9 @@ const DataScienceHistoryApp = () => {
       title: 'DATA SCIENCE MILESTONES',
       noEvents: 'No events for this date in the selected category.',
       share: 'Share',
+      shareOn: 'Share on',
+      copyLink: 'Copy Link',
+      linkCopied: 'Link copied!',
       refresh: 'Refresh',
       fetching: 'Fetching historical events...',
       error: 'Error loading events. Try again.',
@@ -185,6 +193,17 @@ const DataScienceHistoryApp = () => {
     }
   }, [currentDate, language, isLoading]);
 
+  // Close share menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
+        setShowShareMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const getCurrentEvents = () => {
     if (currentCategory === 'all') {
       return events;
@@ -192,6 +211,41 @@ const DataScienceHistoryApp = () => {
     return events.filter(event => event.category === currentCategory);
   };
 
+  // Share functionality
+  const getShareText = (event: { year: number; event: string }) => {
+    const text = `${event.year}: ${event.event}`;
+    const url = window.location.href;
+    return { text, url };
+  };
+
+  const shareOnFacebook = (event: { year: number; event: string }) => {
+    const { url } = getShareText(event);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    setShowShareMenu(false);
+  };
+
+  const shareOnTwitter = (event: { year: number; event: string }) => {
+    const { text, url } = getShareText(event);
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    setShowShareMenu(false);
+  };
+
+  const shareOnInstagram = (event: { year: number; event: string }) => {
+    const { text } = getShareText(event);
+    navigator.clipboard.writeText(text);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+    window.open('https://www.instagram.com/', '_blank');
+    setShowShareMenu(false);
+  };
+
+  const copyShareLink = (event: { year: number; event: string }) => {
+    const { text, url } = getShareText(event);
+    navigator.clipboard.writeText(`${text}\n${url}`);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+    setShowShareMenu(false);
+  };
   const getIconComponent = (iconName) => {
     const icons = {
       'Database': Database,
@@ -366,10 +420,58 @@ const DataScienceHistoryApp = () => {
               </p>
 
               {index === currentEvents.length - 1 && (
-                <button className="bg-transparent border border-green-600 text-green-400 px-6 py-2 rounded-lg hover:bg-green-900 hover:bg-opacity-20 transition-colors flex items-center space-x-2">
-                  <Share className="w-4 h-4" />
-                  <span>{t.share}</span>
-                </button>
+                <div className="relative" ref={shareMenuRef}>
+                  <button 
+                    onClick={() => setShowShareMenu(!showShareMenu)}
+                    className="bg-transparent border border-green-600 text-green-400 px-6 py-2 rounded-lg hover:bg-green-900 hover:bg-opacity-20 transition-colors flex items-center space-x-2"
+                  >
+                    <Share className="w-4 h-4" />
+                    <span>{t.share}</span>
+                  </button>
+                  
+                  {showShareMenu && (
+                    <div className="absolute bottom-full mb-2 left-0 bg-gray-900 border border-green-600 rounded-lg p-2 min-w-[180px] z-50">
+                      <button 
+                        onClick={() => shareOnFacebook(event)}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded hover:bg-green-900 hover:bg-opacity-30 transition-colors text-left"
+                      >
+                        <Facebook className="w-4 h-4 text-blue-500" />
+                        <span>Facebook</span>
+                      </button>
+                      <button 
+                        onClick={() => shareOnTwitter(event)}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded hover:bg-green-900 hover:bg-opacity-30 transition-colors text-left"
+                      >
+                        <Twitter className="w-4 h-4 text-sky-400" />
+                        <span>X (Twitter)</span>
+                      </button>
+                      <button 
+                        onClick={() => shareOnInstagram(event)}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded hover:bg-green-900 hover:bg-opacity-30 transition-colors text-left"
+                      >
+                        <Instagram className="w-4 h-4 text-pink-500" />
+                        <span>Instagram</span>
+                      </button>
+                      <div className="border-t border-green-600 my-1"></div>
+                      <button 
+                        onClick={() => copyShareLink(event)}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded hover:bg-green-900 hover:bg-opacity-30 transition-colors text-left"
+                      >
+                        {linkCopied ? (
+                          <>
+                            <Check className="w-4 h-4 text-green-400" />
+                            <span>{t.linkCopied}</span>
+                          </>
+                        ) : (
+                          <>
+                            <Link2 className="w-4 h-4" />
+                            <span>{t.copyLink}</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           ))
