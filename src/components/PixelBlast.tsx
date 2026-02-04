@@ -10,7 +10,13 @@ const PixelBlast = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Detect mobile for performance optimization
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const PARTICLE_COUNT = isMobile ? 80 : 420;
+    const TARGET_FPS = isMobile ? 30 : 60;
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 2);
 
     const resize = () => {
       const rect = canvas.parentElement?.getBoundingClientRect();
@@ -37,7 +43,7 @@ const PixelBlast = () => {
       size: number;
     };
 
-    const makeParticles = (count = 420): Particle[] => {
+    const makeParticles = (count: number): Particle[] => {
       const w = canvas.width / dpr;
       const h = canvas.height / dpr;
       const maxR = Math.min(w, h) * 0.6;
@@ -55,15 +61,24 @@ const PixelBlast = () => {
           speed: 0.001 + Math.random() * 0.004,
           hue,
           alpha: 0.35 + Math.random() * 0.45,
-          size: 0.6 + Math.random() * 1.8,
+          size: isMobile ? 0.4 + Math.random() * 1.2 : 0.6 + Math.random() * 1.8,
         };
       });
     };
 
-    let particles = makeParticles();
+    let particles = makeParticles(PARTICLE_COUNT);
 
     let raf = 0;
+    let lastFrameTime = 0;
+
     const render = (t: number) => {
+      // Throttle frame rate on mobile
+      if (t - lastFrameTime < FRAME_INTERVAL) {
+        raf = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = t;
+
       const w = canvas.width / dpr;
       const h = canvas.height / dpr;
 
@@ -82,13 +97,21 @@ const PixelBlast = () => {
         p.x = cx + Math.cos(p.angle) * p.radius;
         p.y = cy + Math.sin(p.angle) * p.radius;
 
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 12);
-        grad.addColorStop(0, `hsla(${p.hue}, 100%, 70%, ${p.alpha})`);
-        grad.addColorStop(1, `hsla(${p.hue}, 100%, 60%, 0)`);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
-        ctx.fill();
+        // Simplified rendering on mobile - use solid color instead of gradient
+        if (isMobile) {
+          ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.alpha * 0.7})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 12);
+          grad.addColorStop(0, `hsla(${p.hue}, 100%, 70%, ${p.alpha})`);
+          grad.addColorStop(1, `hsla(${p.hue}, 100%, 60%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       raf = requestAnimationFrame(render);
