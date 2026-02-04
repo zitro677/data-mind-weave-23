@@ -1,17 +1,28 @@
+import { lazy, Suspense } from 'react';
 import { Database, GitBranch, MessageSquare, BookOpen, Network, Camera, Plane, Code2, Workflow, Zap, Sparkles, Container, Cpu, Terminal, Link, Github, Twitter, Linkedin, Mail, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WireframeCube from '@/components/WireframeCube';
 import TypingText from '@/components/TypingText';
 import ExpertiseCard from '@/components/ExpertiseCard';
-import DataHistoryApp from '@/components/DataHistoryApp';
 import LanguageToggle from '@/components/LanguageToggle';
 import SplashCursor from '@/components/SplashCursor';
 import ProfileCard from '@/components/ProfileCard';
-import PixelBlast from '@/components/PixelBlast';
 import LogoLoop from '@/components/LogoLoop';
-import ElectricBorder from '@/components/ElectricBorder';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Skeleton } from '@/components/ui/skeleton';
 import profilePhoto from '@/assets/profile.jpg';
+
+// Lazy load heavy components
+const DataHistoryApp = lazy(() => import('@/components/DataHistoryApp'));
+const PixelBlast = lazy(() => import('@/components/PixelBlast'));
+const ElectricBorder = lazy(() => import('@/components/ElectricBorder'));
+
+// Loading fallback component
+const SectionLoader = () => (
+  <div className="w-full flex items-center justify-center py-12">
+    <Skeleton className="h-48 w-full max-w-md rounded-lg" />
+  </div>
+);
 
 const Index = () => {
   const { t, language } = useLanguage();
@@ -27,7 +38,9 @@ const Index = () => {
       <LanguageToggle />
       {/* Hero Section */}
       <section className="min-h-screen grid-pattern relative flex items-center justify-center px-6 pt-24">
-        <PixelBlast />
+        <Suspense fallback={null}>
+          <PixelBlast />
+        </Suspense>
         <div className="max-w-7xl w-full mx-auto">
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
@@ -147,29 +160,31 @@ const Index = () => {
       {/* Hobbies */}
       <section className="py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <ElectricBorder 
-            color="#ff00ff"
-            speed={1.2}
-            chaos={1}
-            thickness={2}
-            className="p-12 rounded-lg"
-          >
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
-              <div className="flex gap-8 items-center justify-center">
-                <div className="flex items-center gap-3">
-                  <Plane size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">{t('stack.drone')}</span>
+          <Suspense fallback={<SectionLoader />}>
+            <ElectricBorder 
+              color="#ff00ff"
+              speed={1.2}
+              chaos={1}
+              thickness={2}
+              className="p-12 rounded-lg"
+            >
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-6 text-magenta">{t('stack.hobbies')}</h3>
+                <div className="flex gap-8 items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <Plane size={32} className="text-magenta" strokeWidth={1.5} />
+                    <span className="text-lg">{t('stack.drone')}</span>
+                  </div>
+                  <span className="text-magenta text-2xl">|</span>
+                  <div className="flex items-center gap-3">
+                    <Camera size={32} className="text-magenta" strokeWidth={1.5} />
+                    <span className="text-lg">{t('stack.photo')}</span>
+                  </div>
                 </div>
-                <span className="text-magenta text-2xl">|</span>
-                <div className="flex items-center gap-3">
-                  <Camera size={32} className="text-magenta" strokeWidth={1.5} />
-                  <span className="text-lg">{t('stack.photo')}</span>
-                </div>
+                <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6 mx-auto max-w-md" />
               </div>
-              <div className="h-px bg-gradient-to-r from-magenta via-magenta/50 to-transparent mt-6 mx-auto max-w-md" />
-            </div>
-          </ElectricBorder>
+            </ElectricBorder>
+          </Suspense>
         </div>
       </section>
 
@@ -210,7 +225,9 @@ const Index = () => {
       {/* Data History Section */}
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <DataHistoryApp />
+          <Suspense fallback={<SectionLoader />}>
+            <DataHistoryApp />
+          </Suspense>
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import './ElectricBorder.css';
 
 interface ElectricBorderProps {
@@ -17,6 +17,18 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const strokeRef = useRef<HTMLDivElement>(null);
+  
+  // Detect mobile for performance optimization
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+  }, []);
+
+  // Reduced complexity values for mobile
+  const mobileNumOctaves = 3;
+  const desktopNumOctaves = 10;
+  const numOctaves = isMobile ? mobileNumOctaves : desktopNumOctaves;
 
   const updateAnim = () => {
     const svg = svgRef.current;
@@ -47,7 +59,9 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
     [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
 
     const disp = svg.querySelector('feDisplacementMap');
-    if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)));
+    // Reduce displacement on mobile
+    const scaleValue = isMobile ? 15 * (chaos || 1) : 30 * (chaos || 1);
+    if (disp) disp.setAttribute('scale', String(scaleValue));
 
     const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`);
     if (filterEl) {
@@ -73,7 +87,7 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
   useEffect(() => {
     updateAnim();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speed, chaos]);
+  }, [speed, chaos, isMobile]);
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
@@ -94,22 +108,22 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
       <svg ref={svgRef} className="eb-svg" aria-hidden focusable="false">
         <defs>
           <filter id={filterId} colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="1" />
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves={numOctaves} result="noise1" seed="1" />
             <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
               <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
             </feOffset>
 
-            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="1" />
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves={numOctaves} result="noise2" seed="1" />
             <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
               <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" calcMode="linear" />
             </feOffset>
 
-            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="2" />
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves={numOctaves} result="noise1" seed="2" />
             <feOffset in="noise1" dx="0" dy="0" result="offsetNoise3">
               <animate attributeName="dx" values="490; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
             </feOffset>
 
-            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="2" />
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves={numOctaves} result="noise2" seed="2" />
             <feOffset in="noise2" dx="0" dy="0" result="offsetNoise4">
               <animate attributeName="dx" values="0; -490" dur="6s" repeatCount="indefinite" calcMode="linear" />
             </feOffset>
