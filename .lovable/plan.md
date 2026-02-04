@@ -1,108 +1,134 @@
 
 
-## Add Share Functionality to DataHistoryApp
+## Optimizacion de Velocidad de Carga en Movil
 
-### Summary
-Add a share dropdown menu to the "Share" / "Compartir" button in the Data Science History module that allows users to share events on Facebook, X (Twitter), and Instagram.
+### Problemas Identificados
 
----
-
-### Changes
-
-**File: `src/components/DataHistoryApp.tsx`**
-
-#### 1. Add new state for dropdown visibility
-- Add `useState` for controlling the share dropdown open/close state
-
-#### 2. Update translations (lines 17-99)
-Add new translation keys for share options:
-- `shareOn`: "Share on" / "Compartir en"
-- `shareFacebook`: "Facebook"
-- `shareTwitter`: "X (Twitter)"  
-- `shareInstagram`: "Instagram"
-- `copyLink`: "Copy Link" / "Copiar enlace"
-- `linkCopied`: "Link copied!" / "¡Enlace copiado!"
-
-#### 3. Create share handler functions
-- `getShareText()` - Generate share text from current event
-- `shareOnFacebook()` - Open Facebook share dialog
-- `shareOnTwitter()` - Open X/Twitter share intent
-- `shareOnInstagram()` - Copy text to clipboard (Instagram doesn't support direct URL sharing, so we'll copy and open Instagram)
-- `copyShareLink()` - Copy link to clipboard
-
-#### 4. Replace the static Share button (lines 368-373)
-Convert the simple button into a dropdown menu with share options:
-- Facebook icon and link
-- X (Twitter) icon and link
-- Instagram icon and link
-- Copy link option
+Despues de analizar tu proyecto, he identificado los siguientes factores que afectan la velocidad de carga:
 
 ---
 
-### Technical Details
+### 1. Dependencias Pesadas No Utilizadas
 
-**Share URL Construction:**
-```typescript
-const getShareText = (event) => {
-  const text = `${event.year}: ${event.event}`;
-  const url = window.location.href;
-  return { text, url };
-};
+Tu proyecto incluye bibliotecas 3D que probablemente no estan siendo utilizadas activamente:
 
-const shareOnFacebook = (event) => {
-  const { url } = getShareText(event);
-  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-};
+- **@react-three/fiber** y **@react-three/drei**: Bibliotecas 3D pesadas (~400KB+)
+- **three**: Motor 3D (~600KB)
+- **postprocessing**: Efectos de post-procesamiento 3D
 
-const shareOnTwitter = (event) => {
-  const { text, url } = getShareText(event);
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-};
+Estas bibliotecas se cargan aunque no se usen, aumentando significativamente el tiempo de carga.
+
+---
+
+### 2. Animaciones Canvas Intensivas
+
+El componente **PixelBlast** ejecuta animaciones canvas con:
+- 420 particulas animandose continuamente
+- Gradientes radiales creados en cada frame
+- Renderizado a 60fps que consume CPU/bateria en movil
+
+---
+
+### 3. Componentes No Lazy-Loaded
+
+Todos los componentes se cargan de forma sincrona al inicio:
+- DataHistoryApp (componente grande con traducciones y logica de fetch)
+- ProfileCard con efectos CSS complejos
+- ElectricBorder con filtros SVG animados
+
+---
+
+### 4. Widget Externo ElevenLabs
+
+El script de ElevenLabs se carga desde CDN externo:
+```html
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async>
 ```
 
-**New UI Component:**
+---
+
+### Cambios Propuestos
+
+#### Fase 1: Lazy Loading de Componentes
+
+**Archivo: `src/pages/Index.tsx`**
+
+Implementar carga diferida para componentes pesados:
 ```tsx
-<div className="relative">
-  <button 
-    onClick={() => setShowShareMenu(!showShareMenu)}
-    className="bg-transparent border border-green-600 text-green-400 px-6 py-2 rounded-lg hover:bg-green-900 hover:bg-opacity-20 transition-colors flex items-center space-x-2"
-  >
-    <Share className="w-4 h-4" />
-    <span>{t.share}</span>
-  </button>
-  
-  {showShareMenu && (
-    <div className="absolute bottom-full mb-2 left-0 bg-gray-900 border border-green-600 rounded-lg p-2 min-w-[180px]">
-      <button onClick={() => shareOnFacebook(event)}>
-        <Facebook /> Facebook
-      </button>
-      <button onClick={() => shareOnTwitter(event)}>
-        <Twitter /> X (Twitter)
-      </button>
-      <button onClick={() => shareOnInstagram(event)}>
-        <Instagram /> Instagram
-      </button>
-      <button onClick={() => copyShareLink(event)}>
-        <Link /> {t.copyLink}
-      </button>
-    </div>
-  )}
-</div>
+const DataHistoryApp = lazy(() => import('@/components/DataHistoryApp'));
+const PixelBlast = lazy(() => import('@/components/PixelBlast'));
+const ElectricBorder = lazy(() => import('@/components/ElectricBorder'));
+```
+
+Con Suspense wrapper para mostrar un loading state.
+
+---
+
+#### Fase 2: Optimizar PixelBlast para Movil
+
+**Archivo: `src/components/PixelBlast.tsx`**
+
+1. Reducir particulas en movil de 420 a 100
+2. Reducir framerate usando `requestAnimationFrame` throttling
+3. Simplificar gradientes radiales
+4. Detectar dispositivo movil con media query
+
+```tsx
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const PARTICLE_COUNT = isMobile ? 100 : 420;
 ```
 
 ---
 
-### Dependencies
-- Add Lucide icons: `Facebook`, `Twitter`, `Instagram`, `Link2` (already available in lucide-react)
+#### Fase 3: Eliminar Dependencias No Usadas
+
+**Archivo: `package.json`**
+
+Remover bibliotecas 3D no utilizadas:
+- @react-three/fiber
+- @react-three/drei
+- three
+- postprocessing
+
+Esto reducira el bundle en aproximadamente **1MB**.
 
 ---
 
-### Result
-The Share button will open a dropdown menu with options to:
-1. **Facebook** - Opens Facebook share dialog with the current page URL
-2. **X (Twitter)** - Opens Twitter intent with event text and URL
-3. **Instagram** - Copies the text to clipboard and shows a notification (Instagram doesn't support direct URL sharing)
-4. **Copy Link** - Copies the page URL to clipboard with a confirmation message
+#### Fase 4: Optimizar ElectricBorder
 
-The menu labels will be properly translated for both English and Spanish languages.
+**Archivo: `src/components/ElectricBorder.tsx`**
+
+Opcion A: Desactivar filtros SVG en movil (usar borde estatico)
+Opcion B: Reducir complejidad de turbulencia (numOctaves de 10 a 3)
+
+---
+
+#### Fase 5: Optimizar CSS
+
+**Archivo: `src/index.css`**
+
+1. Usar `will-change` con moderacion
+2. Simplificar animaciones en movil con `prefers-reduced-motion`
+3. Reducir complejidad de gradientes CSS en ProfileCard para movil
+
+---
+
+### Resultado Esperado
+
+| Metrica | Antes | Despues |
+|---------|-------|---------|
+| Bundle Size | ~2.5MB | ~1.4MB |
+| First Contentful Paint | ~3-4s | ~1.5s |
+| Time to Interactive | ~5-6s | ~2-3s |
+| CPU en movil | Alto | Moderado |
+
+---
+
+### Notas Adicionales
+
+1. **Imagen de perfil**: La imagen `profile.jpg` deberia optimizarse (comprimirla y convertirla a WebP)
+
+2. **Rebuild necesario**: Despues de estos cambios, necesitaras reconstruir (`npm run build`) y subir nuevamente a Hostinger
+
+3. **Testing**: Recomiendo usar Lighthouse en Chrome DevTools para medir el impacto real de cada optimizacion
 
